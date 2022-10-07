@@ -19,7 +19,7 @@ public class ProductMenu {
                 ProductMenuOptions.searchByName(productsDb);
                 break;
             case "4":
-                ProductMenuOptions.update(productsDb);
+                ProductMenuOptions.update(productsDb, brandsDb);
                 break;
             case "5":
                 ProductMenuOptions.delete(productsDb, brandsDb);
