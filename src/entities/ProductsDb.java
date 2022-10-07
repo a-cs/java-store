@@ -41,7 +41,12 @@ public class ProductsDb extends Utils implements IProductsCrud {
 
     @Override
     public List<String> searchByName(String name) {
-        return null;
+        List<String> products = new ArrayList<>();
+        for (Product p : list) {
+            if (p.getName().contains(name))
+                products.add(p.display());
+        }
+        return products;
     }
 
     @Override

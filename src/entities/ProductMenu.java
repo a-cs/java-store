@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ProductMenu {
     public static int use(ProductsDb productsDb, BrandsDb brandsDb) {
-        String option = JOptionPane.showInputDialog(null, "Escolha uma opção:\n1 - Criar Produto\n2 - Listar todas os Produtos\n3 - Alterar Produto\n4 - Excluir Produto\n9 - Voltar para o menu anterior\n0 - Sair", "Menu Marca", JOptionPane.QUESTION_MESSAGE);
+        String option = JOptionPane.showInputDialog(null, "Escolha uma opção:\n1 - Criar Produto\n2 - Listar todas os Produtos\n3 - Procurar Produtos\n4 - Alterar Produto\n5 - Excluir Produto\n9 - Voltar para o menu anterior\n0 - Sair", "Menu Marca", JOptionPane.QUESTION_MESSAGE);
         if (option == null)
             option = "9";
         switch (option) {
@@ -16,28 +16,40 @@ public class ProductMenu {
                     if (brandCreate != null) {
                         String inputProduct = JOptionPane.showInputDialog("Digite o nome do produto:");
                         if (productsDb.create(inputProduct, brandCreate))
-                            JOptionPane.showMessageDialog(null, "O Produto "+ inputProduct + " da Marca " + inputBrandCreate + " foi criado com sucesso.");
+                            JOptionPane.showMessageDialog(null, "O Produto " + inputProduct + " da Marca " + inputBrandCreate + " foi criado com sucesso.");
                         else
                             JOptionPane.showMessageDialog(null, "Não foi possível criar o produto.", "Erro!", JOptionPane.ERROR_MESSAGE);
                     } else
                         JOptionPane.showMessageDialog(null, "A marca \"" + inputBrandCreate + "\" não foi encontrada no sistema.", "Erro!", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível criar a marca.", "Erro!", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "2":
                 List<String> listaRetorno = productsDb.showAll();
-                if (listaRetorno.size() != 0){
+                if (listaRetorno.size() != 0) {
                     System.out.println("Lista de todos os produtos:");
                     System.out.println(String.join("\n", listaRetorno));
                     System.out.println("");
                     JOptionPane.showMessageDialog(null, "A lista foi impressa no console.");
-                }
-                else
+                } else
                     JOptionPane.showMessageDialog(null, "Nenhum produto cadastrado.", "Erro!", JOptionPane.ERROR_MESSAGE);
                 break;
             case "3":
+                String inputSearch = JOptionPane.showInputDialog("Digite o nome completo ou parte do nome do produto:");
+                if (Utils.isValid(inputSearch)) {
+                    List<String> listSearch = productsDb.searchByName(inputSearch);
+                    if (listSearch.size() != 0) {
+                        System.out.println("Lista de produtos encontrados contendo \"" + inputSearch + "\":");
+                        System.out.println(String.join("\n", listSearch));
+                        System.out.println("");
+                        JOptionPane.showMessageDialog(null, "A lista foi impressa no console.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nenhum produto encontrado.", "Erro!", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                break;
+            case "4":
                 String inputOldName = JOptionPane.showInputDialog("Digite o nome da marca que você deseja alterar:");
                 String inputNewName = JOptionPane.showInputDialog("Digite o novo nome da marcar:");
                 if (productsDb.updateName(inputOldName, inputNewName))
@@ -45,7 +57,7 @@ public class ProductMenu {
                 else
                     JOptionPane.showMessageDialog(null, "Não foi possível alterar a marca.", "Erro!", JOptionPane.ERROR_MESSAGE);
                 break;
-            case "4":
+            case "5":
                 String inputBrandDelete = JOptionPane.showInputDialog("Digite o nome da marca do produto que deseja excluir:");
                 if (Utils.isValid(inputBrandDelete)) {
                     Brand brandDelete = brandsDb.find(inputBrandDelete);
@@ -57,8 +69,7 @@ public class ProductMenu {
                             JOptionPane.showMessageDialog(null, "Erro ao excluir", "Erro!", JOptionPane.ERROR_MESSAGE);
                     } else
                         JOptionPane.showMessageDialog(null, "A marca \"" + inputBrandDelete + "\" não foi encontrada no sistema.", "Erro!", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível encontrar a marca.", "Erro!", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
