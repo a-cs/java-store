@@ -2,7 +2,6 @@ package interfaces;
 
 import entities.Brand;
 import entities.Product;
-import entities.Utils;
 
 import java.util.List;
 

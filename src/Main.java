@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-
-
     public static void main(String[] args) {
         BrandsDb brandsDb = new BrandsDb();
         ProductsDb productsDb = new ProductsDb();
@@ -20,7 +18,6 @@ public class Main {
                 menu = BrandMenu.use(brandsDb, productsDb);
             if (menu == 2)
                 menu = ProductMenu.use(productsDb, brandsDb);
-
         }
     }
 }

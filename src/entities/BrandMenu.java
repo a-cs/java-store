@@ -24,7 +24,11 @@ public class BrandMenu {
             case "9":
                 return 0;
             case "0":
-                System.exit(0);
+                int flag = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja sair?", "Sair", JOptionPane.OK_CANCEL_OPTION);
+                if (flag == 0)
+                    System.exit(0);
+                else
+                    return 1;
             default:
                 JOptionPane.showMessageDialog(null, "Opção invalida. Escolha uma opção valida.", "Erro!", JOptionPane.ERROR_MESSAGE);
         }

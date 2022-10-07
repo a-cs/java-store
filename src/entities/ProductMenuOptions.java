@@ -82,10 +82,13 @@ public class ProductMenuOptions {
             Brand brandDelete = brandsDb.find(inputBrandDelete);
             if (brandDelete != null) {
                 String inputDelete = JOptionPane.showInputDialog("Digite o nome do produto para excluir:");
-                if (productsDb.delete(inputDelete, brandDelete))
-                    JOptionPane.showMessageDialog(null, "O produto \"" + inputDelete + "\" da marca \"" + inputBrandDelete + "\" foi excluido com sucesso");
-                else
-                    JOptionPane.showMessageDialog(null, "Erro ao excluir", "Erro!", JOptionPane.ERROR_MESSAGE);
+                int flag = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja excluir o produto \"" + inputDelete + "\" da marca \"" + inputBrandDelete + "\"?", "Excluir", JOptionPane.OK_CANCEL_OPTION);
+                if (flag == 0) {
+                    if (productsDb.delete(inputDelete, brandDelete))
+                        JOptionPane.showMessageDialog(null, "O produto \"" + inputDelete + "\" da marca \"" + inputBrandDelete + "\" foi excluido com sucesso");
+                    else
+                        JOptionPane.showMessageDialog(null, "Erro ao excluir", "Erro!", JOptionPane.ERROR_MESSAGE);
+                }
             } else
                 JOptionPane.showMessageDialog(null, "A marca \"" + inputBrandDelete + "\" não foi encontrada no sistema.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } else {
